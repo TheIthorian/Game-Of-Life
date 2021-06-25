@@ -12,17 +12,22 @@
     <script src="./index.js"></script>
 </head>
 <body>
-    <div class="button-container">
-        <button id="toggle">Start</button>
-        <button id="step">Step</button>
-        <button id="randomise">Randomise</button>
-        <div class="input-group">
-            <label for="scale">Scale</label>
-            <input id="scale" name="scale" type="range" max="100" min="5" value="10">
+    <div id="controls">
+        <div class="button-container">
+            <button id="toggle">Start</button>
+            <button id="step">Step</button>
+            <button id="randomise">Randomise</button>
+            <button id="refresh">Refresh</button>
         </div>
-        <div class="input-group">
-            <label for="delay">Delay</label>
-            <input id="delay" name="delay" type="number" max="20000" min="50" value="200">
+        <div class="button-container">
+            <div class="input-group">
+                <label for="scale">Scale</label>
+                <input id="scale" name="scale" type="range" max="100" min="5" value="10">
+            </div>
+            <div class="input-group">
+                <label for="delay">Delay</label>
+                <input id="delay" name="delay" type="number" max="20000" min="50" value="200">
+            </div>
         </div>
     </div>
     
