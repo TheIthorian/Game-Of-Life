@@ -28,6 +28,11 @@ window.onload = function() {
         console.log("Randomise", event);
         gameBoard.randomiseCells();
     });
+    
+    document.getElementById("refresh").addEventListener("click", function(event) {
+        console.log("Refresh", event);
+        gameBoard.refreshCells();
+    });
 
     document.getElementById("scale").addEventListener("change", function(event) {
         console.log("Scale", event);
@@ -237,6 +242,15 @@ class GameBoard {
     randomiseCells() {
         for (let i = 0; i < this.cellArray.length; i++) {
             if (Math.random() - 0.5 > 0) {
+                this.changeCellByCell(this.cellArray[i]);
+            }
+        }
+    }
+    
+    
+    refreshCells() {
+        for (let i = 0; i < this.cellArray.length; i++) {
+            if (this.cellArray[i].alive) {
                 this.changeCellByCell(this.cellArray[i]);
             }
         }
