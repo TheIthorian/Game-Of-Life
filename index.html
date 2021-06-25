@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Game of Life</title>
+    <meta charset="utf-8">  
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1">  
+    
+    <link rel="stylesheet" href="./index.css">
+    <script src="./TiledCanvas.js"></script>
+    <script src="./index.js"></script>
+</head>
+<body>
+    <div class="button-container">
+        <button id="toggle">Start</button>
+        <button id="step">Step</button>
+        <button id="randomise">Randomise</button>
+        <div class="input-group">
+            <label for="scale">Scale</label>
+            <input id="scale" name="scale" type="range" max="100" min="5">
+        </div>
+        <div class="input-group">
+            <label for="delay">Delay</label>
+            <input id="delay" name="delay" type="number" max="20000" min="50" value="200">
+        </div>
+    </div>
+    
+    <canvas id="canvas">
+        Your browser does not support the canvas element.
+    </canvas>
+    <a href="about.html">About</a>
+
+</body>
+</html>
