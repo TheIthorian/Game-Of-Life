@@ -11,13 +11,18 @@ body {
     height: 100vh; */
 }
 
+#controls {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+}
+
 .button-container {
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: absolute;
-    left: 10px;
-    top: 10px;
 }
 
 button, input {
