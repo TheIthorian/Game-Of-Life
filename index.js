@@ -217,7 +217,7 @@ class GameBoard {
             if (cell.alive && (2 <= count && count <= 3)) { cell.nextAlive = true; continue; }
 
             // Become alive
-            else if (!cell.alive && count >= 3) { cell.nextAlive = true; }
+            else if (!cell.alive && count == 3) { cell.nextAlive = true; }
 
             // Die
             else if (cell.alive && (count < 2 || count > 3)) { cell.nextAlive = false; }
