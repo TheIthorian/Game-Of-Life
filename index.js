@@ -6,7 +6,10 @@ window.onload = function() {
     canvasElement.width = document.body.clientWidth;
     canvasElement.height = document.body.clientHeight;
 
-    var gameBoard = new GameBoard(canvasElement);
+    let delay = document.getElementById("delay").value;
+    let scale = document.getElementById("scale").value;
+
+    var gameBoard = new GameBoard(canvasElement, scale, delay);
 
 
     // Set up UI
@@ -40,8 +43,16 @@ window.onload = function() {
         canvasElement = document.getElementById("canvas");
         canvasElement.width = document.body.clientWidth;
         canvasElement.height = document.body.clientHeight;
+        if (gameBoard.active) { document.getElementById("toggle").click(); }
 
-        gameBoard = new GameBoard(canvasElement, event.target.value);
+        let scale = Math.ceil((event.target.value / 10) ** 2);
+        scale = scale < 2 ? 2 : scale;
+
+        let delay = document.getElementById("delay").value;
+
+        document.getElementById("scale-label").innerText = `Scale: ${scale}`;
+
+        gameBoard = new GameBoard(canvasElement, scale, delay);
     });
 
 
@@ -136,25 +147,8 @@ class GameBoard {
         }        
         // For canvas debugging
         //this.checkCellsAreWorking();
+        console.log(this.tileSize);
     }
-
-    // constructor(existingBoard) {
-    //     this.tiledCanvasSettings = existingBoard.tiledCanvasSettings;
-    //     this.canvasElement = existingBoard.canvasElement;
-
-    //     this.cellColor = existingBoard.cellColor;
-    //     this.active = existingBoard.active;
-    //     this.tiledCanvas = new TiledCanvas(this.canvasElement, this.tiledCanvasSettings);
-    //     // https://github.com/Squarific/TiledCanvas
-    //     this.tileSize = existingBoard.tileSize;
-    //     this.width = Math.floor(this.canvasElement.width / this.tileSize);
-    //     this.height = Math.floor(this.canvasElement.height / this.tileSize);
-    //     this.cellArray = existingBoard.cellArray;
-    //     this.newCellArray = existingBoard.newCellArray;
-    //     this.simulationDelay = existingBoard.simulationDelay; //ms
-        
-    //     let size = existingBoard.size;    
-    // }
 
     // Helper funcitons
     findPosition(index) {
