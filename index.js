@@ -14,7 +14,7 @@ window.onload = function() {
 
     // Set up UI
     document.getElementById("toggle").addEventListener("click", function(event) {
-        console.log("Toggle simulation: ", event);
+        // console.log("Toggle simulation: ", event);
 
         gameBoard.toggleSimulation(); 
         
@@ -23,30 +23,32 @@ window.onload = function() {
     });
 
     document.getElementById("step").addEventListener("click", function(event) {
-        console.log("Step simulation: ", event);
+        // console.log("Step simulation: ", event);
         gameBoard.simulationStep();
     });
 
     document.getElementById("randomise").addEventListener("click", function(event) {
-        console.log("Randomise", event);
+        // console.log("Randomise", event);
         gameBoard.randomiseCells();
     });
     
     document.getElementById("refresh").addEventListener("click", function(event) {
-        console.log("Refresh", event);
+        // console.log("Refresh", event);
         gameBoard.refreshCells();
     });
 
     document.getElementById("scale").addEventListener("change", function(event) {
-        console.log("Scale", event);
+        // console.log("Scale", event);
 
+        // Change canvas dimensions
         canvasElement = document.getElementById("canvas");
         canvasElement.width = document.body.clientWidth;
         canvasElement.height = document.body.clientHeight;
         if (gameBoard.active) { document.getElementById("toggle").click(); }
 
+        // Quadratic length to make scalling the area size linear
         let scale = Math.ceil((event.target.value / 10) ** 2);
-        scale = scale < 2 ? 2 : scale;
+        scale = scale < 2 ? 2 : scale; // Set a minimuim size
 
         let delay = document.getElementById("delay").value;
 
@@ -57,19 +59,18 @@ window.onload = function() {
 
 
     document.getElementById("delay").addEventListener("change", function(event) {
-        console.log("Delay", event);
+        // console.log("Delay", event);
         gameBoard.simulationDelay = event.target.value;
-        //gameBoard.toggleSimulation();
+        gameBoard.refreshCells();
     });
 
 
     document.getElementById("canvas").addEventListener("click", function(event) {
         // console.log("Canvas clicked: ", event);
-        // console.log(gameBoard);
-
         gameBoard.changeCellByPosition(event.clientX,  event.clientY);
     });
 }
+
 
 const directions = [
     [0, -1], //up
@@ -95,7 +96,6 @@ class Cell {
 
     countNeighbours(gameBoard) {
         //console.log(`countNeighbours(${this.index})`);
-        //let count = Math.floor(Math.random() * 9);
 
         let count = 0;
         let currentCellPosition = gameBoard.findPosition(this.index);
@@ -104,7 +104,9 @@ class Cell {
         for (let i = 0; i < directions.length; i++) {
             position[0] = currentCellPosition[0] + directions[i][0];
             position[1] = currentCellPosition[1] + directions[i][1];
+
             let cellIndex = gameBoard.findIndex(position[0], position[1]);
+            
             if (cellIndex >= 0) { // Cell exists
                 if (gameBoard.cellArray[cellIndex].alive) {
                     count++;
@@ -130,11 +132,14 @@ class GameBoard {
         };
         this.cellColor = '#00b300';
         this.active = false;
-        this.tiledCanvas = new TiledCanvas(canvasElement, this.tiledCanvasSettings);
+
         // https://github.com/Squarific/TiledCanvas
+        this.tiledCanvas = new TiledCanvas(canvasElement, this.tiledCanvasSettings);
+        
         this.tileSize = tileSize;
         this.width = Math.floor(canvasElement.width / this.tileSize);
         this.height = Math.floor(canvasElement.height / this.tileSize);
+
         this.cellArray = [];
         this.newCellArray = [];
         this.simulationDelay = simulationDelay; //ms
@@ -144,19 +149,21 @@ class GameBoard {
         for (let i = 0; i < size; i++) {
             let newCell = new Cell(i);
             this.cellArray.push(newCell);
-        }        
+        }
         // For canvas debugging
         //this.checkCellsAreWorking();
-        console.log(this.tileSize);
+        // console.log(this.tileSize);
     }
 
+
     // Helper funcitons
+
     findPosition(index) {
-        // index += 1;
         let x = index % this.width;
         let y = Math.floor(index / this.width);
         return[x, y];
     }
+
 
     findIndex(x, y) {
         if (x >= this.width || y >= this.height || x < 0 || y < 0) {
@@ -164,6 +171,7 @@ class GameBoard {
         }
         return this.width * y + x;
     }
+
 
     fillCell(x, y) {
         //console.log(`GameBoard.fillCell(${x}, ${y})`);
@@ -175,6 +183,7 @@ class GameBoard {
         this.tiledCanvas.execute();
     }
 
+
     unfillCell(x, y) {
         //console.log(`GameBoard.unfillCell(${x}, ${y})`);
         this.tiledCanvas.context.beginPath();
@@ -185,16 +194,18 @@ class GameBoard {
         this.tiledCanvas.execute();
     }
 
+
     toggleSimulation() {
-        console.log("GameBoard.toggleSimulation()");
+        // console.log("GameBoard.toggleSimulation()");
         this.active = !this.active;
 
         if (this.active) { this.startSimulation(); } 
 
     }
 
+
     startSimulation() {
-        console.log("GameBoard.startSimulation()");
+        // console.log("GameBoard.startSimulation()");
         let gameBoard = this;
 
         const simulation = setInterval(function() {
@@ -204,8 +215,10 @@ class GameBoard {
         }, this.simulationDelay);
     }
 
+
+    // Called in each step of the simulation
     simulationStep(){
-        console.log("GameBoard.simulationStep()");
+        // console.log("GameBoard.simulationStep()");
 
         for (let i = 0; i < this.cellArray.length; i++) {
             let cell = this.cellArray[i]; // The same at this point
@@ -232,6 +245,7 @@ class GameBoard {
             }
         }
     }
+
 
     randomiseCells() {
         for (let i = 0; i < this.cellArray.length; i++) {
@@ -260,12 +274,8 @@ class GameBoard {
         let cell = this.cellArray[this.findIndex(x,y)];
 
         this.changeCellByCell(cell);
-
-        // let alive = this.cellArray[this.findIndex(x,y)].alive;
-        // if (alive) { this.unfillCell(x * this.tileSize, y * this.tileSize); }
-        // else { this.fillCell(x * this.tileSize, y * this.tileSize); }
-        // this.cellArray[this.findIndex(x,y)].alive = !this.cellArray[this.findIndex(x,y)].alive;
     }
+
 
     changeCellByCell(cell) {
         //console.log(`GameBoard.changeCellByCell(${cell.index})`);
@@ -278,6 +288,8 @@ class GameBoard {
         cell.toggleAlive()
     }
 
+
+    // Debugging function
     checkCellsAreWorking() {
         for (let i = 0; i < this.cellArray.length; i++) {
             let cell  = this.cellArray[i];

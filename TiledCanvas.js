@@ -1,3 +1,6 @@
+// Credit to Squarific for this module
+// https://github.com/Squarific/TiledCanvas
+
 function TiledCanvas (canvas, settings) {
     this.canvas = canvas;
     this.ctx = this.canvas.getContext('2d');
