@@ -13,3 +13,7 @@ Learn more on the game of life here: https://en.wikipedia.org/wiki/Conway%27s_Ga
 * `Refresh` - Resets the page
 * `Scale` - Sets the size of the cells
 * `Delay` - Changes the speed of the simulation
+
+## Demo
+
+![ Demo](CGOF_example.gif)
