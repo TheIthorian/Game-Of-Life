@@ -1,7 +1,7 @@
 # GameOfLife
 Conway's game of life implemented with Javascript using canvas.
 
-[View Example](https://theithorian.github.io/GameOfLife/)
+[View Example](https://theithorian.github.io/Game-Of-Life/)
 
 Learn more on the game of life here: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 
