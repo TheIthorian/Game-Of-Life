@@ -1,4 +1,4 @@
-# GameOfLife
+# Game Of Life
 Conway's game of life implemented with Javascript using canvas.
 
 [View Example](https://theithorian.github.io/Game-Of-Life/)
